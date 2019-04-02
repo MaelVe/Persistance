@@ -8,7 +8,7 @@
                        xmlns:conv="clr-namespace:Persistance.Converter"
         xmlns:local="clr-namespace:Persistance"
         mc:Ignorable="d"
-        Title="Suivi des visites" Height="450" Width="800">
+        Title="Suivi des visites" Height="610" Width="1000">
     <Grid>
         <view:StartPage/>
         <view:CommercialView/>

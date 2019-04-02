@@ -16,7 +16,7 @@ namespace Persistance.ViewModel
         private RelayCommand validerCommand;
         private string selectedRole;
         private Visibility affichageLogin;
-
+        private CommercialViewModel CommercialViewModel;
 
         #endregion
 
@@ -30,13 +30,14 @@ namespace Persistance.ViewModel
 
         #endregion
 
-        public StartPageViewModel()
+        public StartPageViewModel(CommercialViewModel commercialViewModel)
         {
             Role = new List<string>();
             Role.Add("Commercial");
             Role.Add("Manager");
 
             ValiderCommand = new RelayCommand(ValiderCommandExecute);
+            this.CommercialViewModel = commercialViewModel;
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Persistance.ViewModel
         public void ValiderCommandExecute(object obj)
         {
             this.AffichageLogin = Visibility.Hidden;
-            CommercialViewModel.Instance.AffichageView = Visibility.Visible;
+            this.CommercialViewModel.AffichageView = Visibility.Visible;
         }
     }
 }

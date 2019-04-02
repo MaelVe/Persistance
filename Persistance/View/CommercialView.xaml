@@ -5,27 +5,74 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Persistance.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"  Visibility="{Binding CommercialViewModel.AffichageView}">
+             d:DesignHeight="610" d:DesignWidth="1001.5"  Visibility="{Binding CommercialViewModel.AffichageView}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="140"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Column="1" Margin="15" Grid.RowSpan="4"/>
+        <Separator Grid.Column="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="5">
+            <Separator.LayoutTransform>
+                <RotateTransform Angle="90" />
+            </Separator.LayoutTransform>
+        </Separator>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
-            <Label Content="Bonjour"/>
+            <Label Content="Bonjour et bienvenue !"/>
             <Label Content="Nom :"/>
             <Label Content="Prenom : "/>
             <Label Content="Fonction :"/>
             <Label Content="Nom du manager :"/>
         </StackPanel>
-       
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
+            <DockPanel Height="25">
+                <Label DockPanel.Dock="Left" Content="Ajout d'une visite" FontWeight="Bold"/>
+                <Separator VerticalAlignment="Center"/>
+            </DockPanel>
+            <Label Content="Choississez un magasin dans la liste de droite"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="le magasin" Margin="10" HorizontalAlignment="Left"/>
+                <DatePicker Grid.Row="1" Grid.Column="1"  SelectedDate="{Binding DateDebut}" Margin="10" x:Name="DateDeb" DisplayDateEnd="{Binding DateFin}" HorizontalAlignment="Right">
+                    <DatePicker.Resources>
+                        <Style TargetType="DatePickerTextBox">
+                            <Setter Property="IsReadOnly" Value="True"/>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+            </StackPanel>
+            <Button Content="Ajouter" HorizontalAlignment="Right" Background="Green"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
+            <DockPanel Height="25">
+                <Label DockPanel.Dock="Left" Content="Modification d'une visite" FontWeight="Bold"/>
+                <Separator VerticalAlignment="Center"/>
+            </DockPanel>
+            <Label Content="Choississez une visite dans la liste de droite"/>
+            <DatePicker Grid.Row="1" Grid.Column="1"  SelectedDate="{Binding DateDebut}" Margin="10" DisplayDateEnd="{Binding DateFin}" HorizontalAlignment="Left">
+                <DatePicker.Resources>
+                    <Style TargetType="DatePickerTextBox">
+                        <Setter Property="IsReadOnly" Value="True"/>
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+            <Button Content="Modifier" HorizontalAlignment="Right" Background="CadetBlue"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="3" Height="120" VerticalAlignment="Bottom">
+            <DockPanel Height="25">
+                <Label DockPanel.Dock="Left" Content="Suppression d'une visite" FontWeight="Bold"/>
+                <Separator VerticalAlignment="Center"/>
+            </DockPanel>
+            <Label Content="Sélectionnez une visite dans la liste a droite puis appuyer sur le bouton pour la supprimer"/>
+
+            <Button Content="Supprimer" HorizontalAlignment="Right" Background="Red"/>
+        </StackPanel>
     </Grid>
 </UserControl>

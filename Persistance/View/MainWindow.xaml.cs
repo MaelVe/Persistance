@@ -25,6 +25,7 @@ namespace Persistance
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
     }
 }
