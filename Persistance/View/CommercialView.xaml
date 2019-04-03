@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Persistance.View"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="610" d:DesignWidth="1001.5"  Visibility="{Binding CommercialViewModel.AffichageView}">
     <Grid>
@@ -38,16 +40,10 @@
             </DockPanel>
             <Label Content="Choississez un magasin dans la liste de droite"/>
             <StackPanel Orientation="Horizontal">
-                <TextBox Text="le magasin" Margin="10" HorizontalAlignment="Left"/>
-                <DatePicker Grid.Row="1" Grid.Column="1"  SelectedDate="{Binding DateDebut}" Margin="10" x:Name="DateDeb" DisplayDateEnd="{Binding DateFin}" HorizontalAlignment="Right">
-                    <DatePicker.Resources>
-                        <Style TargetType="DatePickerTextBox">
-                            <Setter Property="IsReadOnly" Value="True"/>
-                        </Style>
-                    </DatePicker.Resources>
-                </DatePicker>
+                <TextBox Controls:TextBoxHelper.Watermark="Nom du magasin"  Margin="10" Width="110"/>
+                <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" Culture="en-In" SelectedTimeFormat="Short" SelectedDateFormat="Short"/>
             </StackPanel>
-            <Button Content="Ajouter" HorizontalAlignment="Right" Background="Green"/>
+            <Button Content="Ajouter" HorizontalAlignment="Right" VerticalContentAlignment="Center" Background="{StaticResource BrushLightGreen}" Template="{StaticResource MainLoginButton}"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
             <DockPanel Height="25">
@@ -55,14 +51,10 @@
                 <Separator VerticalAlignment="Center"/>
             </DockPanel>
             <Label Content="Choississez une visite dans la liste de droite"/>
-            <DatePicker Grid.Row="1" Grid.Column="1"  SelectedDate="{Binding DateDebut}" Margin="10" DisplayDateEnd="{Binding DateFin}" HorizontalAlignment="Left">
-                <DatePicker.Resources>
-                    <Style TargetType="DatePickerTextBox">
-                        <Setter Property="IsReadOnly" Value="True"/>
-                    </Style>
-                </DatePicker.Resources>
-            </DatePicker>
-            <Button Content="Modifier" HorizontalAlignment="Right" Background="CadetBlue"/>
+            <StackPanel Orientation="Horizontal">
+                <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" />
+            </StackPanel>
+            <Button Content="Modifier" HorizontalAlignment="Right" Background="{StaticResource BrushLightBlue}" VerticalContentAlignment="Center" Template="{StaticResource MainLoginButton}"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="3" Height="120" VerticalAlignment="Bottom">
@@ -72,7 +64,7 @@
             </DockPanel>
             <Label Content="Sélectionnez une visite dans la liste a droite puis appuyer sur le bouton pour la supprimer"/>
 
-            <Button Content="Supprimer" HorizontalAlignment="Right" Background="Red"/>
+            <Button Content="Supprimer" HorizontalAlignment="Right" Template="{StaticResource MainLoginButton}" Background="Red" VerticalContentAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

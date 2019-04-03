@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using MVVM;
+using Persistance.Repository;
 
 namespace Persistance.ViewModel
 {
@@ -48,6 +46,29 @@ namespace Persistance.ViewModel
         {
             this.AffichageLogin = Visibility.Hidden;
             this.CommercialViewModel.AffichageView = Visibility.Visible;
+            var db = new PersistanceDb();
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    Console.Write("Enter a name for a new Blog: ");
+                    var name = Console.ReadLine();
+
+                    var blog = new Magasin { Enseigne = "leclerc", NomMagasin = "qcecef" };
+                    db.Magasins.Add(blog);
+                       
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+
+           
         }
     }
 }
