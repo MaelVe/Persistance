@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Persistance.Repository
+namespace Persistance.Data.Entities
 {
 
     [Table("Utilisateur")]

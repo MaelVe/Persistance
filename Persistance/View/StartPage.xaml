@@ -3,15 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:Persistance.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Visibility="{Binding StartPageViewModel.AffichageLogin}">
+             Focusable="True"
+             d:DesignHeight="475" d:DesignWidth="820" Visibility="{Binding StartPageViewModel.AffichageLogin}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="60"/>
             <RowDefinition/>
-            <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,11 +25,26 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="/Assets/Images/a.jpg" Opacity="0.9"/>
+            <ImageBrush ImageSource="/Assets/Images/fond.jpg" Opacity="0.9"/>
         </Grid.Background>
-        <Label Grid.Column="2" Grid.Row="2" Content="Vous êtes " HorizontalAlignment="Right" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="18"/>
-        <ComboBox Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Height="30" Width="150" ItemsSource="{Binding StartPageViewModel.Role}" SelectedItem="{Binding StartPageViewModel.SelectedRole}"/>
-        <Button Content="Valider" Grid.Column="4" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Template="{StaticResource MainLoginButton}" Command="{Binding StartPageViewModel.ValiderCommand}" />
-        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding la}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Width="100"/>
+        <Label   Grid.Column="2" Grid.Row="2" Content="Vous êtes "    HorizontalAlignment="Right"   VerticalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+
+        <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding StartPageViewModel.Prenom,UpdateSourceTrigger=PropertyChanged}" Margin="15" VerticalContentAlignment="Center"  Controls:TextBoxHelper.Watermark="Prénom">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding StartPageViewModel.ValiderCommand}" Key="Enter"/>
+            </TextBox.InputBindings>
+        </TextBox>
+        <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding StartPageViewModel.Nom, UpdateSourceTrigger=PropertyChanged}"    Margin="15" VerticalContentAlignment="Center"  Controls:TextBoxHelper.Watermark="Nom">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding StartPageViewModel.ValiderCommand}" Key="Enter"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+
+        <Button  Grid.Column="4" Grid.Row="4" Content="Valider"       VerticalAlignment="Center" Template="{StaticResource MainLoginButton}" Command="{Binding StartPageViewModel.ValiderCommand}">
+
+        </Button>
+        <Label   Grid.Column="3" Grid.Row="5" Content="{Binding StartPageViewModel.ErrorMessage}" VerticalAlignment="Top" Grid.ColumnSpan="2" Foreground="Red" Visibility="{Binding StartPageViewModel.ErrorMessageVisibility, Converter={StaticResource visibilityConverter}}"/>
+
     </Grid>
 </UserControl>

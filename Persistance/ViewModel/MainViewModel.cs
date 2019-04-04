@@ -9,6 +9,7 @@ namespace Persistance.ViewModel
 
         public MainViewModel()
         {
+            
             this.CommercialViewModel = new CommercialViewModel();
             this.StartPageViewModel = new StartPageViewModel(this.CommercialViewModel);
         }

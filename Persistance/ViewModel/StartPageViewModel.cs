@@ -2,38 +2,46 @@
 using System.Collections.Generic;
 using System.Windows;
 using MVVM;
-using Persistance.Repository;
+using Persistance.Data.Entities;
+using Persistance.Data.Repositories;
 
 namespace Persistance.ViewModel
 {
     public class StartPageViewModel : ObservableObject
     {
         #region Fields
-
-        private List<string> role;
+        
         private RelayCommand validerCommand;
         private string selectedRole;
         private Visibility affichageLogin;
         private CommercialViewModel CommercialViewModel;
+        private VisiteRepository visiteRepository;
+        private UtilisateurRepository utilisateurRepository;
+        private string prenom;
+        private string nom;
+        private bool errorMessageVisibility;
+        private string errorMessage;           
 
         #endregion
 
         #region Properties
 
-        public List<string> Role { get => role; set => SetProperty(nameof(Role), ref role, value); }
         public RelayCommand ValiderCommand { get => validerCommand; set => validerCommand = value; }
         public string SelectedRole { get => selectedRole; set => SetProperty(nameof(SelectedRole), ref selectedRole, value); }    
         public Visibility AffichageLogin { get => affichageLogin; set => SetProperty(nameof(AffichageLogin), ref affichageLogin, value); }
+        public string Prenom { get => prenom; set => SetProperty(nameof(Prenom), ref prenom, value); }
+        public string Nom { get => nom; set => SetProperty(nameof(Nom), ref nom, value); }
+        public bool ErrorMessageVisibility { get => errorMessageVisibility; set => SetProperty(nameof(ErrorMessageVisibility), ref errorMessageVisibility, value); }
+        public string ErrorMessage { get => errorMessage; set => SetProperty(nameof(ErrorMessage), ref errorMessage, value); }
 
 
         #endregion
 
         public StartPageViewModel(CommercialViewModel commercialViewModel)
         {
-            Role = new List<string>();
-            Role.Add("Commercial");
-            Role.Add("Manager");
-
+            ErrorMessageVisibility = false;
+            visiteRepository = new VisiteRepository();
+            utilisateurRepository = new UtilisateurRepository();
             ValiderCommand = new RelayCommand(ValiderCommandExecute);
             this.CommercialViewModel = commercialViewModel;
         }
@@ -44,31 +52,30 @@ namespace Persistance.ViewModel
         /// <param name="obj"></param>
         public void ValiderCommandExecute(object obj)
         {
-            this.AffichageLogin = Visibility.Hidden;
-            this.CommercialViewModel.AffichageView = Visibility.Visible;
-            var db = new PersistanceDb();
-
-            using (var transaction = db.Database.BeginTransaction())
+            if(!string.IsNullOrEmpty(Prenom) && !string.IsNullOrEmpty(Nom))
             {
-                try
+                Utilisateur user = utilisateurRepository.SearchUtilisateur(Nom, Prenom);
+                if(user != null)
                 {
-                    Console.Write("Enter a name for a new Blog: ");
-                    var name = Console.ReadLine();
-
-                    var blog = new Magasin { Enseigne = "leclerc", NomMagasin = "qcecef" };
-                    db.Magasins.Add(blog);
-                       
-                    db.SaveChanges();
-                    transaction.Commit();
+                    this.CommercialViewModel.SetUtilisateur(user);
+                    this.CommercialViewModel.UpdateUser();
+                    this.CommercialViewModel.UpdateMagasin();
+                    this.AffichageLogin = Visibility.Hidden;
+                    this.CommercialViewModel.AffichageView = Visibility.Visible;
+                    visiteRepository.Add();
                 }
-                catch (Exception)
+                else
                 {
-                    transaction.Rollback();
-                    throw;
+                    ErrorMessage = "Aucun utilisateur ne possède ce prénom et ce nom !";
+                    ErrorMessageVisibility = true;
                 }
             }
-
-           
+            else
+            {
+                ErrorMessage = "Le nom ou le prénom n'est pas renseigné !";
+                ErrorMessageVisibility = true;
+            }
+                   
         }
     }
 }

@@ -20,18 +20,46 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Column="1" Margin="15" Grid.RowSpan="4"/>
+        <DataGrid Grid.Column="1" Margin="15" Grid.RowSpan="2" ItemsSource="{Binding CommercialViewModel.LesMagasins}" SelectedItem="{Binding CommercialViewModel.SelectedMagasin}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" IsSynchronizedWithCurrentItem="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nom du magasin" Binding="{Binding NomMagasin}" Width="*"/>
+                <DataGridTextColumn Header="Enseigne" Binding="{Binding Enseigne}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Column="1" Margin="15" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding CommercialViewModel.LesVisites}" SelectedItem="{Binding CommercialViewModel.SelectedVisite}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" IsSynchronizedWithCurrentItem="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Commercial" Binding="{Binding Commercial}" Width="*"/>
+                <DataGridTextColumn Header="Magasin" Binding="{Binding Magasin}" Width="*"/>
+                <DataGridTextColumn Header="Date et heure de la visite" Binding="{Binding DateEtHeure}" Width="*"/>
+                <DataGridTextColumn Header="Visite réalisé" Binding="{Binding VisiteRealise}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
         <Separator Grid.Column="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="5">
             <Separator.LayoutTransform>
                 <RotateTransform Angle="90" />
             </Separator.LayoutTransform>
         </Separator>
+        
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
-            <Label Content="Bonjour et bienvenue !"/>
-            <Label Content="Nom :"/>
-            <Label Content="Prenom : "/>
-            <Label Content="Fonction :"/>
-            <Label Content="Nom du manager :"/>
+            <Label Content="Bonjour et bienvenue !" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Nom :" FontWeight="Bold"/>
+                <Label Content="{Binding CommercialViewModel.NomUser}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Prenom : " FontWeight="Bold"/>
+                <Label Content="{Binding CommercialViewModel.PrenomUser}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Fonction :" FontWeight="Bold"/>
+                <Label Content="{Binding CommercialViewModel.FonctionUser}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Nom du manager :" FontWeight="Bold"/>
+                <Label Content="{Binding CommercialViewModel.NomManagerUser}"/>
+            </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
             <DockPanel Height="25">
@@ -40,10 +68,10 @@
             </DockPanel>
             <Label Content="Choississez un magasin dans la liste de droite"/>
             <StackPanel Orientation="Horizontal">
-                <TextBox Controls:TextBoxHelper.Watermark="Nom du magasin"  Margin="10" Width="110"/>
-                <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" Culture="en-In" SelectedTimeFormat="Short" SelectedDateFormat="Short"/>
+                <TextBox Controls:TextBoxHelper.Watermark="Nom du magasin"  Margin="10" Width="110" MaxWidth="110" Text="{Binding CommercialViewModel.NomMagasin}" IsEnabled="False"/>
+                <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" Culture="en-In" SelectedDate="{Binding CommercialViewModel.SelectedDate}" SelectedTimeFormat="Short" SelectedDateFormat="Short"/>
             </StackPanel>
-            <Button Content="Ajouter" HorizontalAlignment="Right" VerticalContentAlignment="Center" Background="{StaticResource BrushLightGreen}" Template="{StaticResource MainLoginButton}"/>
+            <Button Content="Ajouter" Command="{Binding CommercialViewModel.AjouterCommand}"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Background="{StaticResource BrushLightGreen}" Template="{StaticResource MainLoginButton}"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
             <DockPanel Height="25">
@@ -54,7 +82,7 @@
             <StackPanel Orientation="Horizontal">
                 <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" />
             </StackPanel>
-            <Button Content="Modifier" HorizontalAlignment="Right" Background="{StaticResource BrushLightBlue}" VerticalContentAlignment="Center" Template="{StaticResource MainLoginButton}"/>
+            <Button Content="Modifier" HorizontalAlignment="Right" Command="{Binding CommercialViewModel.ModifierCommand}"  Background="{StaticResource BrushLightBlue}" VerticalContentAlignment="Center" Template="{StaticResource MainLoginButton}"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="3" Height="120" VerticalAlignment="Bottom">
@@ -63,8 +91,7 @@
                 <Separator VerticalAlignment="Center"/>
             </DockPanel>
             <Label Content="Sélectionnez une visite dans la liste a droite puis appuyer sur le bouton pour la supprimer"/>
-
-            <Button Content="Supprimer" HorizontalAlignment="Right" Template="{StaticResource MainLoginButton}" Background="Red" VerticalContentAlignment="Center"/>
+            <Button Content="Supprimer" HorizontalAlignment="Right" Command="{Binding CommercialViewModel.SupprimerCommand}"  Template="{StaticResource MainLoginButton}" Background="Red" VerticalContentAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

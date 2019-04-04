@@ -1,8 +1,8 @@
-﻿namespace Persistance.Repository
-{
-    using System.Data.Entity;
+﻿using System.Data.Entity;
 
-    public class PersistanceDb : DbContext
+namespace Persistance.Data.Entities { 
+
+    public class PersistanceDbContext : DbContext
     {
         // Votre contexte a été configuré pour utiliser une chaîne de connexion « PersistanceModel » du fichier 
         // de configuration de votre application (App.config ou Web.config). Par défaut, cette chaîne de connexion cible 
@@ -10,10 +10,10 @@
         // 
         // Pour cibler une autre base de données et/ou un autre fournisseur de base de données, modifiez 
         // la chaîne de connexion « PersistanceModel » dans le fichier de configuration de l'application.
-        public PersistanceDb()
+        public PersistanceDbContext()
             : base("name=PersistanceDb")
         {
-            Database.SetInitializer<PersistanceDb>(null);
+            Database.SetInitializer<PersistanceDbContext>(null);
             this.Configuration.LazyLoadingEnabled = false;
         }
 
@@ -22,5 +22,6 @@
         public DbSet<Magasin> Magasins { get; set; }
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         public DbSet<Visite> Visites { get; set; }
+        public DbSet<CommercialMagasin> CommercialMagasins { get; set; }
     }
 }

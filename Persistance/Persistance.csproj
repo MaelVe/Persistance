@@ -117,10 +117,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\VisibilityConverter.cs" />
-    <Compile Include="Repository\Magasin.cs" />
-    <Compile Include="Repository\PersistanceDb.cs" />
-    <Compile Include="Repository\Utilisateur.cs" />
-    <Compile Include="Repository\Visite.cs" />
+    <Compile Include="Data\Entities\CommercialMagasin.cs" />
+    <Compile Include="Data\Entities\Magasin.cs" />
+    <Compile Include="Data\Entities\PersistanceDbContext.cs" />
+    <Compile Include="Data\Entities\Utilisateur.cs" />
+    <Compile Include="Data\Entities\Visite.cs" />
+    <Compile Include="Data\Repositories\MagasinRepository.cs" />
+    <Compile Include="Data\Repositories\UtilisateurRepository.cs" />
+    <Compile Include="Data\Repositories\VisiteRepository.cs" />
+    <Compile Include="Model\VisiteModel.cs" />
     <Compile Include="ViewModel\CommercialViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\StartPageViewModel.cs" />
@@ -183,6 +188,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Assets\bdd\PersistanceDb.db" />
     <None Include="packages.config" />
@@ -195,17 +201,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\synchro.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\degrade.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\b.jpg" />
-    <Resource Include="Assets\Images\e.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\a.jpg" />
+    <Resource Include="Assets\Images\fond.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MVVM\MVVM.csproj">
