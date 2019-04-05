@@ -4,14 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Persistance.View"
              mc:Ignorable="d" 
-             Focusable="True"
-             d:DesignHeight="475" d:DesignWidth="820" Visibility="{Binding StartPageViewModel.AffichageLogin}">
+             Focusable="True"             
+    d:DesignHeight="500" d:DesignWidth="300" Visibility="{Binding StartPageViewModel.AffichageLogin}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="160"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition />
+            <RowDefinition/>
             <RowDefinition Height="60"/>
             <RowDefinition Height="60"/>
             <RowDefinition/>
@@ -19,32 +20,30 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition/>
-            <ColumnDefinition />
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="/Assets/Images/fond.jpg" Opacity="0.9"/>
+            <ImageBrush ImageSource="/Assets/Images/fondNoir.jpg" Opacity="0.9"/>
         </Grid.Background>
-        <Label   Grid.Column="2" Grid.Row="2" Content="Vous êtes "    HorizontalAlignment="Right"   VerticalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+        <Label   Grid.Column="1" Grid.Row="1" Content="Vous êtes "    HorizontalAlignment="Center"   VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
 
-        <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding StartPageViewModel.Prenom,UpdateSourceTrigger=PropertyChanged}" Margin="15" VerticalContentAlignment="Center"  Controls:TextBoxHelper.Watermark="Prénom">
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding StartPageViewModel.Prenom,UpdateSourceTrigger=PropertyChanged}" Margin="15" VerticalContentAlignment="Center"  Controls:TextBoxHelper.Watermark="Prénom" Foreground="White"  materialDesign:HintAssist.Hint="Prenom" FontWeight="Bold" FontSize="15">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding StartPageViewModel.ValiderCommand}" Key="Enter"/>
             </TextBox.InputBindings>
         </TextBox>
-        <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding StartPageViewModel.Nom, UpdateSourceTrigger=PropertyChanged}"    Margin="15" VerticalContentAlignment="Center"  Controls:TextBoxHelper.Watermark="Nom">
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding StartPageViewModel.Nom, UpdateSourceTrigger=PropertyChanged}"    Margin="15" VerticalContentAlignment="Center"  Controls:TextBoxHelper.Watermark="Nom" Foreground="White" materialDesign:HintAssist.Hint="Nom" FontWeight="Bold" FontSize="15">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding StartPageViewModel.ValiderCommand}" Key="Enter"/>
             </TextBox.InputBindings>
         </TextBox>
 
 
-        <Button  Grid.Column="4" Grid.Row="4" Content="Valider"       VerticalAlignment="Center" Template="{StaticResource MainLoginButton}" Command="{Binding StartPageViewModel.ValiderCommand}">
+        <Button  Grid.Column="1" Grid.Row="4" Content="Valider"       VerticalAlignment="Center" Template="{StaticResource MainLoginButton}" Command="{Binding StartPageViewModel.ValiderCommand}" Margin="15">
 
         </Button>
-        <Label   Grid.Column="3" Grid.Row="5" Content="{Binding StartPageViewModel.ErrorMessage}" VerticalAlignment="Top" Grid.ColumnSpan="2" Foreground="Red" Visibility="{Binding StartPageViewModel.ErrorMessageVisibility, Converter={StaticResource visibilityConverter}}"/>
+        <Label   Grid.Column="0" Grid.Row="5" Content="{Binding StartPageViewModel.ErrorMessage}" VerticalAlignment="Top" Foreground="Red" Visibility="{Binding StartPageViewModel.ErrorMessageVisibility, Converter={StaticResource visibilityConverter}}" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
 
     </Grid>
 </UserControl>

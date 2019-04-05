@@ -18,7 +18,15 @@ namespace Persistance.ViewModel
         private string prenomUser;
         private string fonctionUser;
         private string nomMagasin;
-        private DateTime selectedDate;
+        private int rowStackSuppr;
+        private bool visiteRealiseAjout;
+        private bool temp;
+        private bool IsManager;
+        private bool isEnabled;
+        private bool commercialAffichage;
+        private bool visiteRealiseModif;
+        private DateTime selectedDateAjout;
+        private DateTime selectedDateModif;
         private string nomManagerUser;
         private ObservableCollection<Magasin> lesMagasins;
         private ObservableCollection<VisiteModel> lesVisites;
@@ -31,6 +39,7 @@ namespace Persistance.ViewModel
         private RelayCommand supprimerCommand;
         private RelayCommand ajouterCommand;
         private RelayCommand modifierCommand;
+
 
         #endregion
 
@@ -49,28 +58,65 @@ namespace Persistance.ViewModel
                 if (selectedMagasin != null)
                 {
                     NomMagasin = selectedMagasin.NomMagasin;
-                    List<Visite> visites = visiteRepository.GetVisiteByMagasin(selectedMagasin.IdMagasin);
-                    LesVisites = new ObservableCollection<VisiteModel>(this.TransformVisiteForDisplay(visites));
+                    this.UpdateVisite();
                 }
 
                 return selectedMagasin;
             }
-
             set => SetProperty(nameof(SelectedMagasin), ref selectedMagasin, value);
         }
-
         public string NomMagasin { get => nomMagasin; set => SetProperty(nameof(NomMagasin), ref nomMagasin, value); }
         public ObservableCollection<VisiteModel> LesVisites { get => lesVisites; set => SetProperty(nameof(LesVisites), ref lesVisites, value); }
-        public VisiteModel SelectedVisite { get => selectedVisite; set => SetProperty(nameof(SelectedVisite), ref selectedVisite, value); }
+        public VisiteModel SelectedVisite
+        {
+            get
+            {               
+                IsEnabled = false;
+                if (selectedVisite != null)
+                {
+                    if (IsManager)
+                    {
+                        IsEnabled = true;
+                        return selectedVisite;
+                    }
+
+                    VisiteRealiseModif = selectedVisite.VisiteRealise == "Oui" ? true : false;
+                    SelectedDateModif = DateTime.Parse(selectedVisite.DateEtHeure);
+                    var commercial = selectedVisite.Commercial.Split(' ');
+                    if (commercial[0] == Utilisateur.Prenom && commercial[1] == Utilisateur.Nom)
+                    {
+                        IsEnabled = true;
+                    }
+                }
+                return selectedVisite;
+            }
+            set => SetProperty(nameof(SelectedVisite), ref selectedVisite, value);
+        }
         public RelayCommand SupprimerCommand { get => supprimerCommand; set => supprimerCommand = value; }
         public RelayCommand AjouterCommand { get => ajouterCommand; set => ajouterCommand = value; }
         public RelayCommand ModifierCommand { get => modifierCommand; set => modifierCommand = value; }
-        public DateTime SelectedDate { get => selectedDate; set => SetProperty(nameof(SelectedDate), ref selectedDate, value); }
+        public DateTime SelectedDateAjout { get => selectedDateAjout; set => SetProperty(nameof(SelectedDateAjout), ref selectedDateAjout, value); }
+        public bool VisiteRealiseAjout { get => visiteRealiseAjout; set => SetProperty(nameof(VisiteRealiseAjout), ref visiteRealiseAjout, value); }
+        public DateTime SelectedDateModif { get => selectedDateModif; set => SetProperty(nameof(SelectedDateModif), ref selectedDateModif, value); }
+        public bool VisiteRealiseModif
+        {
+            get => visiteRealiseModif;
+            set
+            {
+                temp = visiteRealiseModif;
+                SetProperty(nameof(VisiteRealiseModif), ref visiteRealiseModif, value);
+            }
+        }
+
+        public bool IsEnabled { get => isEnabled; set => SetProperty(nameof(IsEnabled), ref isEnabled, value); }
+        public bool CommercialAffichage { get => commercialAffichage; set => SetProperty(nameof(CommercialAffichage), ref commercialAffichage, value); }
+        public int RowStackSuppr { get => rowStackSuppr; set => SetProperty(nameof(RowStackSuppr), ref rowStackSuppr, value); }
 
         #endregion
 
         public CommercialViewModel()
         {
+            IsEnabled = false;
             AffichageView = Visibility.Hidden;
             magasinRepository = new MagasinRepository();
             utilisateurRepository = new UtilisateurRepository();
@@ -82,30 +128,69 @@ namespace Persistance.ViewModel
 
         private void ModifierCommandExecute(object obj)
         {
-            throw new NotImplementedException();
+            if (SelectedDateModif != null)
+            {
+                try
+                {
+                    var dateModifTemp = SelectedDateModif.ToString();
+                    var visite = this.TransformBackToVisite(SelectedVisite);
+                    visite.DateHeureVisite = dateModifTemp;
+                    visite.VisiteRealise = temp;
+                    visiteRepository.Update(visite);
+                    this.UpdateVisite();
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
 
         private void AjouterCommandExecute(object obj)
         {
-            if (SelectedDate != null && string.IsNullOrEmpty(NomMagasin))
+            if (SelectedDateAjout != null && !string.IsNullOrEmpty(NomMagasin))
             {
                 Visite visite = new Visite();
-                visite.DateHeureVisite = SelectedDate.ToString();
+                visite.DateHeureVisite = SelectedDateAjout.ToString();
                 visite.IdUtilisateur = Utilisateur.IdUtilisateur;
                 visite.IdMagasin = magasinRepository.GetMagasinByNom(NomMagasin).IdMagasin;
-
-                // TODO: Continuer
+                visite.VisiteRealise = VisiteRealiseAjout;
+                visiteRepository.Add(visite);
+                this.UpdateVisite();
             }
         }
 
         private void SupprimerCommandExecute(object obj)
         {
-            throw new NotImplementedException();
+            if (SelectedVisite != null)
+            {
+                var visite = this.TransformBackToVisite(SelectedVisite);
+                visiteRepository.Remove(visite);
+                this.UpdateVisite();
+            }
+        }
+
+        private void UpdateVisite()
+        {
+            List<Visite> visites = visiteRepository.GetVisiteByMagasin(selectedMagasin.IdMagasin);
+            LesVisites = new ObservableCollection<VisiteModel>(this.TransformVisiteForDisplay(visites));
         }
 
         public void SetUtilisateur(Utilisateur utilisateur)
         {
             this.Utilisateur = utilisateur;
+            if (utilisateur.Fonction == "Manager")
+            {
+                IsManager = true;
+                CommercialAffichage = false;
+                RowStackSuppr = 1;
+            }
+            else
+            {
+                IsManager = false;
+                CommercialAffichage = true;
+                RowStackSuppr = 3;
+            }
         }
 
         public void UpdateUser()
@@ -118,8 +203,17 @@ namespace Persistance.ViewModel
 
         public void UpdateMagasin()
         {
-            List<Magasin> magasins = magasinRepository.GetMagasinByUtilisateur(Utilisateur);
-            LesMagasins = new ObservableCollection<Magasin>(magasins);
+            List<Magasin> magasins;
+            if (IsManager)
+            {
+                magasins = magasinRepository.GetAll();
+                LesMagasins = new ObservableCollection<Magasin>(magasins);
+            }
+            else
+            {
+                magasins = magasinRepository.GetMagasinByUtilisateur(Utilisateur);
+                LesMagasins = new ObservableCollection<Magasin>(magasins);
+            }          
         }
 
         public List<VisiteModel> TransformVisiteForDisplay(List<Visite> visites)
@@ -132,7 +226,7 @@ namespace Persistance.ViewModel
                 visiteModel.Commercial = user.Prenom + " " + user.Nom;
                 visiteModel.DateEtHeure = visite.DateHeureVisite;
                 visiteModel.Magasin = magasinRepository.GetMagasin(visite.IdMagasin).NomMagasin;
-                visiteModel.VisiteRealise = visite.VisiteRealise ? "Non" : "Oui";
+                visiteModel.VisiteRealise = visite.VisiteRealise ? "Oui" : "Non";
                 visiteModel.Id = visite.IdVisite;
                 visiteModels.Add(visiteModel);
             }

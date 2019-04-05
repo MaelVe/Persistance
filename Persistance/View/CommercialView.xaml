@@ -4,94 +4,113 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Persistance.View"
-              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"             
              mc:Ignorable="d" 
-             d:DesignHeight="610" d:DesignWidth="1001.5"  Visibility="{Binding CommercialViewModel.AffichageView}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="160"/>
-            <RowDefinition Height="140"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
+             d:DesignHeight="1035" d:DesignWidth="1380"  Visibility="{Binding CommercialViewModel.AffichageView}">
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="230"/>
+                <RowDefinition Height="270"/>
+                <RowDefinition Height="280"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <SolidColorBrush Color="WhiteSmoke"/>
+            </Grid.Background>
+            <DataGrid Grid.Column="1" Margin="15" Grid.RowSpan="2" ItemsSource="{Binding CommercialViewModel.LesMagasins}" SelectedItem="{Binding CommercialViewModel.SelectedMagasin}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" IsSynchronizedWithCurrentItem="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nom du magasin" Binding="{Binding NomMagasin}" Width="*"/>
+                    <DataGridTextColumn Header="Enseigne" Binding="{Binding Enseigne}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <DataGrid Grid.Column="1" Margin="15" Grid.RowSpan="2" ItemsSource="{Binding CommercialViewModel.LesMagasins}" SelectedItem="{Binding CommercialViewModel.SelectedMagasin}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" IsSynchronizedWithCurrentItem="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom du magasin" Binding="{Binding NomMagasin}" Width="*"/>
-                <DataGridTextColumn Header="Enseigne" Binding="{Binding Enseigne}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            <DataGrid Grid.Column="1" Margin="15" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding CommercialViewModel.LesVisites}" SelectedItem="{Binding CommercialViewModel.SelectedVisite}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" IsSynchronizedWithCurrentItem="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Commercial" Binding="{Binding Commercial}" Width="*"/>
+                    <DataGridTextColumn Header="Magasin" Binding="{Binding Magasin}" Width="*"/>
+                    <DataGridTextColumn Header="Date et heure de la visite" Binding="{Binding DateEtHeure}" Width="*"/>
+                    <DataGridTextColumn Header="Visite réalisé" Binding="{Binding VisiteRealise}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <DataGrid Grid.Column="1" Margin="15" Grid.Row="2" Grid.RowSpan="2" ItemsSource="{Binding CommercialViewModel.LesVisites}" SelectedItem="{Binding CommercialViewModel.SelectedVisite}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" IsSynchronizedWithCurrentItem="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Commercial" Binding="{Binding Commercial}" Width="*"/>
-                <DataGridTextColumn Header="Magasin" Binding="{Binding Magasin}" Width="*"/>
-                <DataGridTextColumn Header="Date et heure de la visite" Binding="{Binding DateEtHeure}" Width="*"/>
-                <DataGridTextColumn Header="Visite réalisé" Binding="{Binding VisiteRealise}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        
-        <Separator Grid.Column="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="5">
-            <Separator.LayoutTransform>
-                <RotateTransform Angle="90" />
-            </Separator.LayoutTransform>
-        </Separator>
-        
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
-            <Label Content="Bonjour et bienvenue !" FontWeight="Bold"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Nom :" FontWeight="Bold"/>
-                <Label Content="{Binding CommercialViewModel.NomUser}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Prenom : " FontWeight="Bold"/>
-                <Label Content="{Binding CommercialViewModel.PrenomUser}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Fonction :" FontWeight="Bold"/>
-                <Label Content="{Binding CommercialViewModel.FonctionUser}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Nom du manager :" FontWeight="Bold"/>
-                <Label Content="{Binding CommercialViewModel.NomManagerUser}"/>
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
-            <DockPanel Height="25">
-                <Label DockPanel.Dock="Left" Content="Ajout d'une visite" FontWeight="Bold"/>
-                <Separator VerticalAlignment="Center"/>
-            </DockPanel>
-            <Label Content="Choississez un magasin dans la liste de droite"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Controls:TextBoxHelper.Watermark="Nom du magasin"  Margin="10" Width="110" MaxWidth="110" Text="{Binding CommercialViewModel.NomMagasin}" IsEnabled="False"/>
-                <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" Culture="en-In" SelectedDate="{Binding CommercialViewModel.SelectedDate}" SelectedTimeFormat="Short" SelectedDateFormat="Short"/>
-            </StackPanel>
-            <Button Content="Ajouter" Command="{Binding CommercialViewModel.AjouterCommand}"  HorizontalAlignment="Right" VerticalContentAlignment="Center" Background="{StaticResource BrushLightGreen}" Template="{StaticResource MainLoginButton}"/>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
-            <DockPanel Height="25">
-                <Label DockPanel.Dock="Left" Content="Modification d'une visite" FontWeight="Bold"/>
-                <Separator VerticalAlignment="Center"/>
-            </DockPanel>
-            <Label Content="Choississez une visite dans la liste de droite"/>
-            <StackPanel Orientation="Horizontal">
-                <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" />
-            </StackPanel>
-            <Button Content="Modifier" HorizontalAlignment="Right" Command="{Binding CommercialViewModel.ModifierCommand}"  Background="{StaticResource BrushLightBlue}" VerticalContentAlignment="Center" Template="{StaticResource MainLoginButton}"/>
-        </StackPanel>
+            <Separator Grid.Column="1" HorizontalAlignment="Left" Grid.RowSpan="4" Margin="5">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+            <materialDesign:Card Padding="32" Margin="16" Grid.Column="0" Grid.Row="0">
+                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
+                    <Label Content="Bonjour et bienvenue !" FontSize="16"/>
+                    <Separator VerticalAlignment="Center" Background="DarkViolet"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Nom :" FontWeight="Bold"/>
+                        <Label Content="{Binding CommercialViewModel.NomUser}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Prenom : " FontWeight="Bold"/>
+                        <Label Content="{Binding CommercialViewModel.PrenomUser}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Fonction :" FontWeight="Bold"/>
+                        <Label Content="{Binding CommercialViewModel.FonctionUser}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding CommercialViewModel.CommercialAffichage ,Converter={StaticResource visibilityConverter}}">
+                        <Label Content="Nom du manager :" FontWeight="Bold"/>
+                        <Label Content="{Binding CommercialViewModel.NomManagerUser}"/>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Padding="32" Margin="16" Grid.Column="0" Grid.Row="1">
+                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Visibility="{Binding CommercialViewModel.CommercialAffichage ,Converter={StaticResource visibilityConverter}}">
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="3" Height="120" VerticalAlignment="Bottom">
-            <DockPanel Height="25">
-                <Label DockPanel.Dock="Left" Content="Suppression d'une visite" FontWeight="Bold"/>
-                <Separator VerticalAlignment="Center"/>
-            </DockPanel>
-            <Label Content="Sélectionnez une visite dans la liste a droite puis appuyer sur le bouton pour la supprimer"/>
-            <Button Content="Supprimer" HorizontalAlignment="Right" Command="{Binding CommercialViewModel.SupprimerCommand}"  Template="{StaticResource MainLoginButton}" Background="Red" VerticalContentAlignment="Center"/>
-        </StackPanel>
-    </Grid>
+                    <Label DockPanel.Dock="Left" Content="Ajout d'une visite" FontSize="16"/>
+                    <Separator VerticalAlignment="Center" Background="DarkViolet"/>
+
+                    <Label Content="Choississez un magasin dans la liste de droite"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Controls:TextBoxHelper.Watermark="Nom du magasin"  Margin="10" Width="110" MaxWidth="110" Text="{Binding CommercialViewModel.NomMagasin}" IsEnabled="False"/>
+                        <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date" Culture="en-In" SelectedDate="{Binding CommercialViewModel.SelectedDateAjout}" SelectedTimeFormat="Short" SelectedDateFormat="Short"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Visite réalisé :" VerticalAlignment="Center"/>
+                        <Controls:ToggleSwitch OnLabel="Oui" OffLabel="Non"  HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding CommercialViewModel.VisiteRealiseAjout}"/>
+                    </StackPanel>
+                    <Button Content="Ajouter" Command="{Binding CommercialViewModel.AjouterCommand}"  HorizontalAlignment="Right"  VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Padding="32" Margin="16"  Grid.Column="0" Grid.Row="2">
+                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Visibility="{Binding CommercialViewModel.CommercialAffichage ,Converter={StaticResource visibilityConverter}}">
+
+                    <Label DockPanel.Dock="Left" Content="Modification d'une visite" FontSize="16"/>
+                    <Separator VerticalAlignment="Center" Background="DarkViolet"/>
+
+                    <Label Content="Choississez une visite dans la liste de droite"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Controls:DateTimePicker Margin="10" Controls:TextBoxHelper.Watermark="Sélectionnez une date"  SelectedDate="{Binding CommercialViewModel.SelectedDateModif}" Culture="en-In" SelectedTimeFormat="Short" SelectedDateFormat="Short"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Visite réalisé :" VerticalAlignment="Center"/>
+                        <Controls:ToggleSwitch OnLabel="Oui" OffLabel="Non"  HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding CommercialViewModel.VisiteRealiseModif}"/>
+                    </StackPanel>
+                    <Button Content="Modifier" HorizontalAlignment="Right" Command="{Binding CommercialViewModel.ModifierCommand}" VerticalContentAlignment="Center" IsEnabled="{Binding CommercialViewModel.IsEnabled}"/>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Padding="32" Margin="16"  Grid.Column="0" Grid.Row="{Binding CommercialViewModel.RowStackSuppr}">
+                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="{Binding CommercialViewModel.RowStackSuppr}" Height="120" VerticalAlignment="Bottom">
+
+                    <Label DockPanel.Dock="Left" Content="Suppression d'une visite" FontSize="16" />
+                    <Separator VerticalAlignment="Center" Background="DarkViolet"/>
+
+                    <Label Content="Sélectionnez une visite dans la liste a droite puis appuyer sur le bouton pour la supprimer"/>
+                    <Button Content="Supprimer" HorizontalAlignment="Right" Command="{Binding CommercialViewModel.SupprimerCommand}" VerticalContentAlignment="Center" IsEnabled="{Binding CommercialViewModel.IsEnabled}"/>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

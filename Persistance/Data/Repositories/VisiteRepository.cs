@@ -16,18 +16,58 @@ namespace Persistance.Data.Repositories
             context = new PersistanceDbContext();
         }
 
-        public void Add()
+        public void Add(Visite visite)
         {
             using (var transaction = context.Database.BeginTransaction())
             {
                 try
                 {
-                    Console.Write("Enter a name for a new Blog: ");
-                    var name = Console.ReadLine();
+                    
+                    context.Visites.Add(visite);
 
-                    var blog = new Magasin { Enseigne = "leclerc", NomMagasin = "qcecef" };
-                    context.Magasins.Add(blog);
+                    context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
 
+        public void Update(Visite visite)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var entity = context.Visites.Find(visite.IdVisite);
+                    if (entity == null)
+                    {
+                        return;
+                    }
+
+                    context.Entry(entity).CurrentValues.SetValues(visite);
+                    context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public void Remove(Visite visite)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var entity = context.Visites.Remove(visite);
+                   
                     context.SaveChanges();
                     transaction.Commit();
                 }

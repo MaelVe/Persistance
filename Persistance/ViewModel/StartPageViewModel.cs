@@ -15,6 +15,7 @@ namespace Persistance.ViewModel
         private string selectedRole;
         private Visibility affichageLogin;
         private CommercialViewModel CommercialViewModel;
+        private MainViewModel MainViewModel;
         private VisiteRepository visiteRepository;
         private UtilisateurRepository utilisateurRepository;
         private string prenom;
@@ -37,11 +38,12 @@ namespace Persistance.ViewModel
 
         #endregion
 
-        public StartPageViewModel(CommercialViewModel commercialViewModel)
+        public StartPageViewModel(CommercialViewModel commercialViewModel, MainViewModel mainViewModel)
         {
             ErrorMessageVisibility = false;
             visiteRepository = new VisiteRepository();
             utilisateurRepository = new UtilisateurRepository();
+            this.MainViewModel = mainViewModel;
             ValiderCommand = new RelayCommand(ValiderCommandExecute);
             this.CommercialViewModel = commercialViewModel;
         }
@@ -62,7 +64,8 @@ namespace Persistance.ViewModel
                     this.CommercialViewModel.UpdateMagasin();
                     this.AffichageLogin = Visibility.Hidden;
                     this.CommercialViewModel.AffichageView = Visibility.Visible;
-                    visiteRepository.Add();
+                    this.MainViewModel.Height = 1035;
+                    this.MainViewModel.Width = 1380;
                 }
                 else
                 {

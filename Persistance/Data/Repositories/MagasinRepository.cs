@@ -39,5 +39,9 @@ namespace Persistance.Data.Repositories
             return context.Magasins.FirstOrDefault(f => f.NomMagasin == nomMagasin);
         }
 
+        public List<Magasin> GetAll()
+        {
+            return context.Magasins.ToList();
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Persistance.View
     /// <summary>
     /// Logique d'interaction pour ManagerView.xaml
     /// </summary>
-    public partial class ManagerView : UserControl
+    public partial class ManagerView : Page
     {
         public ManagerView()
         {
