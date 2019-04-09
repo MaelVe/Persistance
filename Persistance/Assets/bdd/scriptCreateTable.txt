@@ -1,0 +1,93 @@
+CREATE TABLE  "Utilisateur"  ( 
+    "IdUtilisateur"  SERIAL PRIMARY KEY, 
+    "Nom"  VARCHAR(128), 
+    "Prenom"  VARCHAR(128),
+    "Fonction"  VARCHAR(128),
+    "NomManager"  VARCHAR(128)
+);
+
+CREATE TABLE  "Magasin"  (
+    "IdMagasin"  SERIAL PRIMARY KEY, 
+    "NomMagasin"  TEXT, 
+    "Enseigne"  TEXT
+);
+
+CREATE TABLE CommercialMagasin (  
+    "IdCommercialMagasin"  SERIAL PRIMARY KEY,  
+    "IdUtilisateur"  INTEGER,
+    "IdMagasin"  INTEGER,
+    FOREIGN KEY( "IdUtilisateur" ) REFERENCES  "Utilisateur" ( "IdUtilisateur" ),
+    FOREIGN KEY( "IdMagasin" ) REFERENCES  "Magasin" ( "IdMagasin" ) 
+);
+
+CREATE TABLE "Visite" ( 
+    "IdVisite"  SERIAL PRIMARY KEY,  
+    "DateHeureVisite"  DATE, 
+    "IdUtilisateur"  INTEGER,  
+    "IdMagasin"  INTEGER, 
+    "VisiteRealise"  BOOLEAN,
+    "Guid" VARCHAR(200), 
+    "IsDelete" BOOLEAN,
+    "DateUpdate" DATE,
+    FOREIGN KEY( "IdMagasin" ) REFERENCES "Magasin"( "IdMagasin" ),
+    FOREIGN KEY( "IdUtilisateur" ) REFERENCES  "Utilisateur" ( "IdUtilisateur" ) 
+);
+
+
+
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Leclerc Rennes','Leclerc');
+
+    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Leclerc Nantes','Leclerc');
+
+    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Leclerc Paris','Leclerc');
+
+    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Leclerc Tokyo','Leclerc');
+
+    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Super U Tokyo','Super U');
+
+     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Super U Rennes','Super U');
+
+     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Super U Nantes','Super U');
+
+     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Super U Paris','Super U');
+
+     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Super U Laval','Super U');
+    
+     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Super U Arnac-La-Poste','Super U');
+
+         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Carrefour Rennes','Carrefour');
+    
+         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Carrefour Tokyo','Carrefour');
+    
+         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Carrefour Monteton','Carrefour');
+    
+         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Carrefour Routier','Carrefour');
+
+    
+         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Carrefour Nantes','Carrefour');
+
+    
+         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Intermarche Paris','Intermarche');
+
+             INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Intermarche Simple','Intermarche');
+             INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Intermarche ¨PourLeCLimat','Intermarche');
+             INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
+    VALUES ( 'Intermarche Nantes','Intermarche');

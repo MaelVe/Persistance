@@ -19,8 +19,7 @@ namespace Persistance.Data.Entities
 
         [Required]
         public string Fonction { get; set; }
-
-        [Required]
+        
         public string NomManager { get; set; }
 
     }

@@ -7,13 +7,33 @@ using Persistance.Data.Entities;
 
 namespace Persistance.Data.Repositories
 {
-    public class MagasinRepository
+    public class MagasinRepositoryCentrale
     {
-        private readonly PersistanceDbContext context;
+        private readonly PersistanceDbContextCentrale context;
 
-        public MagasinRepository()
+        public MagasinRepositoryCentrale()
         {
-            context = new PersistanceDbContext();
+            context = new PersistanceDbContextCentrale();
+        }
+
+        public void AddRange(List<Magasin> visites)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+
+                    context.Magasins.AddRange(visites);
+
+                    context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
 
         public  List<Magasin> GetMagasinByUtilisateur(Utilisateur utilisateur)

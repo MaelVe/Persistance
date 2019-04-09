@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using MVVM;
+using Persistance.Data;
 using Persistance.Data.Entities;
 using Persistance.Data.Repositories;
 
@@ -45,7 +46,7 @@ namespace Persistance.ViewModel
             utilisateurRepository = new UtilisateurRepository();
             this.MainViewModel = mainViewModel;
             ValiderCommand = new RelayCommand(ValiderCommandExecute);
-            this.CommercialViewModel = commercialViewModel;
+            this.CommercialViewModel = commercialViewModel;       
         }
 
         /// <summary>

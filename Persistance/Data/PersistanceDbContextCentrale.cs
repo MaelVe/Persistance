@@ -1,8 +1,11 @@
 ﻿using System.Data.Entity;
+using Npgsql;
+using Persistance.Data.Entities;
 
-namespace Persistance.Data.Entities { 
+namespace Persistance.Data
+{ 
 
-    public class PersistanceDbContext : DbContext
+    public class PersistanceDbContextCentrale : DbContext
     {
         // Votre contexte a été configuré pour utiliser une chaîne de connexion « PersistanceModel » du fichier 
         // de configuration de votre application (App.config ou Web.config). Par défaut, cette chaîne de connexion cible 
@@ -10,11 +13,17 @@ namespace Persistance.Data.Entities {
         // 
         // Pour cibler une autre base de données et/ou un autre fournisseur de base de données, modifiez 
         // la chaîne de connexion « PersistanceModel » dans le fichier de configuration de l'application.
-        public PersistanceDbContext()
-            : base("name=PersistanceDb")
+        public PersistanceDbContextCentrale()
+           : base(nameOrConnectionString: "PersistanceNpgsql")
         {
-            Database.SetInitializer<PersistanceDbContext>(null);
+            Database.SetInitializer<PersistanceDbContextCentrale>(null);
             this.Configuration.LazyLoadingEnabled = false;
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("public");
+            base.OnModelCreating(modelBuilder);
         }
 
         // Ajoutez un DbSet pour chaque type d'entité à inclure dans votre modèle. Pour plus d'informations 

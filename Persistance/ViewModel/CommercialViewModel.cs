@@ -6,6 +6,7 @@ using MVVM;
 using Persistance.Data.Entities;
 using Persistance.Data.Repositories;
 using Persistance.Model;
+using Persistance.Service;
 
 namespace Persistance.ViewModel
 {
@@ -39,6 +40,7 @@ namespace Persistance.ViewModel
         private RelayCommand supprimerCommand;
         private RelayCommand ajouterCommand;
         private RelayCommand modifierCommand;
+        private RelayCommand synchroCommand;
 
 
         #endregion
@@ -81,7 +83,7 @@ namespace Persistance.ViewModel
                     }
 
                     VisiteRealiseModif = selectedVisite.VisiteRealise == "Oui" ? true : false;
-                    SelectedDateModif = DateTime.Parse(selectedVisite.DateEtHeure);
+                    SelectedDateModif = selectedVisite.DateEtHeure;
                     var commercial = selectedVisite.Commercial.Split(' ');
                     if (commercial[0] == Utilisateur.Prenom && commercial[1] == Utilisateur.Nom)
                     {
@@ -107,10 +109,10 @@ namespace Persistance.ViewModel
                 SetProperty(nameof(VisiteRealiseModif), ref visiteRealiseModif, value);
             }
         }
-
         public bool IsEnabled { get => isEnabled; set => SetProperty(nameof(IsEnabled), ref isEnabled, value); }
         public bool CommercialAffichage { get => commercialAffichage; set => SetProperty(nameof(CommercialAffichage), ref commercialAffichage, value); }
         public int RowStackSuppr { get => rowStackSuppr; set => SetProperty(nameof(RowStackSuppr), ref rowStackSuppr, value); }
+        public RelayCommand SynchroCommand { get => synchroCommand; set => synchroCommand = value; }
 
         #endregion
 
@@ -124,6 +126,17 @@ namespace Persistance.ViewModel
             SupprimerCommand = new RelayCommand(SupprimerCommandExecute);
             AjouterCommand = new RelayCommand(AjouterCommandExecute);
             ModifierCommand = new RelayCommand(ModifierCommandExecute);
+            SynchroCommand = new RelayCommand(SynchroCommandExecute);
+        }
+
+        private void SynchroCommandExecute(object obj)
+        {
+            var synchro = new SynchronisationService();
+            if (synchro.IsNetworkConnected("127.0.0.1"))
+            {
+                synchro.SynchronisationVisite();
+                this.UpdateVisite();
+            }
         }
 
         private void ModifierCommandExecute(object obj)
@@ -134,8 +147,9 @@ namespace Persistance.ViewModel
                 {
                     var dateModifTemp = SelectedDateModif.ToString();
                     var visite = this.TransformBackToVisite(SelectedVisite);
-                    visite.DateHeureVisite = dateModifTemp;
+                    visite.DateHeureVisite = DateTime.Parse(dateModifTemp);
                     visite.VisiteRealise = temp;
+                    visite.DateUpdate = DateTime.Now;
                     visiteRepository.Update(visite);
                     this.UpdateVisite();
                 }
@@ -151,10 +165,12 @@ namespace Persistance.ViewModel
             if (SelectedDateAjout != null && !string.IsNullOrEmpty(NomMagasin))
             {
                 Visite visite = new Visite();
-                visite.DateHeureVisite = SelectedDateAjout.ToString();
+                visite.DateHeureVisite = SelectedDateAjout;
                 visite.IdUtilisateur = Utilisateur.IdUtilisateur;
                 visite.IdMagasin = magasinRepository.GetMagasinByNom(NomMagasin).IdMagasin;
                 visite.VisiteRealise = VisiteRealiseAjout;
+                visite.Guid = Guid.NewGuid().ToString();
+                visite.IsDelete = false;
                 visiteRepository.Add(visite);
                 this.UpdateVisite();
             }
@@ -165,7 +181,8 @@ namespace Persistance.ViewModel
             if (SelectedVisite != null)
             {
                 var visite = this.TransformBackToVisite(SelectedVisite);
-                visiteRepository.Remove(visite);
+                visite.IsDelete = true;
+                visiteRepository.Update(visite);
                 this.UpdateVisite();
             }
         }
@@ -224,7 +241,7 @@ namespace Persistance.ViewModel
                 VisiteModel visiteModel = new VisiteModel();
                 var user = utilisateurRepository.GetUtilisateur(visite.IdUtilisateur);
                 visiteModel.Commercial = user.Prenom + " " + user.Nom;
-                visiteModel.DateEtHeure = visite.DateHeureVisite;
+                visiteModel.DateEtHeure = visite.DateHeureVisite.Value;
                 visiteModel.Magasin = magasinRepository.GetMagasin(visite.IdMagasin).NomMagasin;
                 visiteModel.VisiteRealise = visite.VisiteRealise ? "Oui" : "Non";
                 visiteModel.Id = visite.IdVisite;

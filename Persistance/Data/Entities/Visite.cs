@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Persistance.Data.Entities
@@ -11,12 +12,18 @@ namespace Persistance.Data.Entities
         public int IdVisite { get; set; }
 
         [Required]
-        public string DateHeureVisite { get; set; }
+        public DateTime? DateHeureVisite { get; set; }
+
+        public DateTime? DateUpdate { get; set; }
+
+        public string Guid { get; set; }
 
         public bool VisiteRealise { get; set; }
 
         public int IdUtilisateur { get; set; }
 
         public int IdMagasin { get; set; }
+
+        public bool IsDelete { get; set; }
     }
 }

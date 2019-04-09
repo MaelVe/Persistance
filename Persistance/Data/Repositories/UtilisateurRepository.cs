@@ -25,5 +25,10 @@ namespace Persistance.Data.Repositories
         {
             return context.Utilisateurs.FirstOrDefault(f => f.IdUtilisateur == idUtilisateur);
         }
+        public List<Utilisateur> GetAll()
+        {
+            return context.Utilisateurs.ToList();
+        }
+
     }
 }

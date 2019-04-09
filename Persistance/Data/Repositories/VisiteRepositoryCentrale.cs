@@ -7,13 +7,13 @@ using Persistance.Data.Entities;
 
 namespace Persistance.Data.Repositories
 {
-    public class VisiteRepository
+    public class VisiteRepositoryCentrale
     {
-        private readonly PersistanceDbContext context;
+        private readonly PersistanceDbContextCentrale context;
 
-        public VisiteRepository()
+        public VisiteRepositoryCentrale()
         {
-            context = new PersistanceDbContext();
+            context = new PersistanceDbContextCentrale();
         }
 
         public void Add(Visite visite)
@@ -42,7 +42,6 @@ namespace Persistance.Data.Repositories
             {
                 try
                 {
-
                     context.Visites.AddRange(visites);
 
                     context.SaveChanges();
@@ -106,8 +105,9 @@ namespace Persistance.Data.Repositories
 
         public List<Visite> GetVisiteByMagasin(int idMagasin)
         {
-            return context.Visites.Where(w => w.IdMagasin == idMagasin && w.IsDelete == false).ToList();
+            return context.Visites.Where(w => w.IdMagasin == idMagasin).ToList();
         }
+
         public List<Visite> GetAll()
         {
             return context.Visites.ToList();
@@ -115,7 +115,7 @@ namespace Persistance.Data.Repositories
 
         public List<Visite> GetNotDeleted()
         {
-            return context.Visites.Where(w => w.IsDelete == false).ToList();
+            return context.Visites.Where(w=>w.IsDelete==false).ToList();
         }
 
         public List<Visite> GetDeleted()
@@ -123,14 +123,32 @@ namespace Persistance.Data.Repositories
             return context.Visites.Where(w => w.IsDelete == true).ToList();
         }
 
-        public List<Visite> GetWithAnUpdateDate()
+        public void FakeDelete(List<Visite> visites)
         {
-            return context.Visites.Where(w => w.DateUpdate != null).ToList();
-        }
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var visite in visites)
+                    {
+                        var entity = context.Visites.Find(visite.IdVisite);
+                        if (entity == null)
+                        {
+                            return;
+                        }
 
-        public void DeleteAll()
-        {            
-            context.Visites.RemoveRange(this.GetAll());
+                        context.Entry(entity).CurrentValues.SetValues(visite);
+                    }
+                   
+                    context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
     }
 }

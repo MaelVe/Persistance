@@ -15,8 +15,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="230"/>
                 <RowDefinition Height="270"/>
+                <RowDefinition Height="280"/>
                 <RowDefinition Height="280"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
@@ -64,6 +64,7 @@
                         <Label Content="Nom du manager :" FontWeight="Bold"/>
                         <Label Content="{Binding CommercialViewModel.NomManagerUser}"/>
                     </StackPanel>
+                    <Button Content="Synchroniser" Command="{Binding CommercialViewModel.SynchroCommand}"  HorizontalAlignment="Right"  VerticalContentAlignment="Center"/>
                 </StackPanel>
             </materialDesign:Card>
             <materialDesign:Card Padding="32" Margin="16" Grid.Column="0" Grid.Row="1">
