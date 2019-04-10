@@ -50,6 +50,9 @@ namespace Persistance.Service
         /// </summary>
         public void SynchronisationVisite()
         {
+            //CommercialMagasinRepository commercialMagasinRepository = new CommercialMagasinRepository();
+            //CommercialMagasinRepositoryCentrale commercialMagasinRepositoryCentrale = new CommercialMagasinRepositoryCentrale();
+            //commercialMagasinRepositoryCentrale.AddRange(commercialMagasinRepository.GetAll());
             ArchivageService.Archivage();
 
             this.SynchronisationAjout();
@@ -132,7 +135,6 @@ namespace Persistance.Service
                     {
                         repoVisiteCentrale.Update(visite);
                     }
-
                 }
             }
         }

@@ -24,8 +24,8 @@ namespace Persistance.Service
                     Directory.CreateDirectory("./Assets/Archivage");
 
                 }
-               
-                string time = DateTime.Now.ToString("ddMMMyyTHHmm");
+
+                string time = DateTime.Now.ToString("ddMMMyyTHHmmss");
                 File.Copy(fileToCopy, Path.Combine("./Assets/Archivage/PersistanceDb-" + time + ".db"));
             }
         }
@@ -37,12 +37,25 @@ namespace Persistance.Service
         {
             var repoVisiteCentrale = new VisiteRepositoryCentrale();
             var repoVisiteLocale = new VisiteRepository();
-
-            var deletedVisites = repoVisiteCentrale.GetDeleted();
-            if(deletedVisites.Count > 500)
+            try
             {
-                repoVisiteCentrale.RemoveRange(deletedVisites);
+                var deletedVisitesCentrale = repoVisiteCentrale.GetDeleted();
+                if (deletedVisitesCentrale.Count > 500)
+                {
+                    repoVisiteCentrale.RemoveRange(deletedVisitesCentrale);
+                }
+
+                var deletedVisitesLocale = repoVisiteLocale.GetDeleted();
+                if (deletedVisitesLocale.Count > 500)
+                {
+                    repoVisiteLocale.RemoveRange(deletedVisitesLocale);
+                }
             }
+            catch (Exception ex)
+            {
+
+            }
+
         }
     }
 }

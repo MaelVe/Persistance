@@ -29,7 +29,7 @@ namespace Persistance.Data.Repositories
             {
                 try
                 {
-                    
+
                     context.Visites.Add(visite);
 
                     context.SaveChanges();
@@ -105,7 +105,33 @@ namespace Persistance.Data.Repositories
             {
                 try
                 {
-                    var entity = context.Visites.Remove(visite);                   
+                    var entity = context.Visites.Remove(visite);
+                    context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Supprime plusieurs visites de la base
+        /// </summary>
+        /// <param name="visite">les visites à supprimer</param>
+        public void RemoveRange(List<Visite> visites)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var visite in visites)
+                    {
+                        var entity = context.Visites.Remove(visite);
+                    }
+
                     context.SaveChanges();
                     transaction.Commit();
                 }
@@ -177,7 +203,7 @@ namespace Persistance.Data.Repositories
         /// Supprime toutes les visites
         /// </summary>
         public void DeleteAll()
-        {            
+        {
             context.Visites.RemoveRange(this.GetAll());
         }
     }

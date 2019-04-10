@@ -12,11 +12,11 @@ namespace Persistance.Data.Repositories
     /// </summary>
     public class CommercialMagasinRepositoryCentrale
     {
-        private readonly PersistanceDbContext context;
+        private readonly PersistanceDbContextCentrale context;
 
         public CommercialMagasinRepositoryCentrale()
         {
-            context = new PersistanceDbContext();
+            context = new PersistanceDbContextCentrale();
         }
 
         /// <summary>

@@ -35,65 +35,25 @@ CREATE TABLE "Visite" (
 
 
 
-INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Leclerc Rennes','Leclerc');
-
-    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Leclerc Nantes','Leclerc');
-
-    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Leclerc Paris','Leclerc');
-
-    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Leclerc Tokyo','Leclerc');
-
-    INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Super U Tokyo','Super U');
-
-     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Super U Rennes','Super U');
-
-     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Super U Nantes','Super U');
-
-     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Super U Paris','Super U');
-
-     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Super U Laval','Super U');
-    
-     INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Super U Arnac-La-Poste','Super U');
-
-         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Carrefour Rennes','Carrefour');
-    
-         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Carrefour Tokyo','Carrefour');
-    
-         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Carrefour Monteton','Carrefour');
-    
-         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Carrefour Routier','Carrefour');
-
-    
-         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Carrefour Nantes','Carrefour');
-
-    
-         INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Intermarche Paris','Intermarche');
-
-             INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Intermarche Simple','Intermarche');
-             INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Intermarche ¨PourLeCLimat','Intermarche');
-             INSERT INTO "Magasin" ("NomMagasin", "Enseigne")
-    VALUES ( 'Intermarche Nantes','Intermarche');
-
-
-
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Leclerc Rennes','Leclerc');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Leclerc Nantes','Leclerc');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Leclerc Paris','Leclerc');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Leclerc Tokyo','Leclerc');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Super U Tokyo','Super U');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Super U Rennes','Super U');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Super U Nantes','Super U');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Super U Paris','Super U');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Super U Laval','Super U');    
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Super U Arnac-La-Poste','Super U');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Carrefour Rennes','Carrefour');  
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Carrefour Tokyo','Carrefour');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Carrefour Monteton','Carrefour');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Carrefour Routier','Carrefour');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Carrefour Nantes','Carrefour');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Intermarche Paris','Intermarche');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Intermarche Simple','Intermarche');
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Intermarche ¨PourLeCLimat','Intermarche');	
+INSERT INTO "Magasin" ("NomMagasin", "Enseigne") VALUES ( 'Intermarche Nantes','Intermarche');
 
 INSERT INTO "Utilisateur" ("Nom", "Prenom", "Fonction", "NomManager") Values ('Bon', 'Jean','Manager', NULL);
 INSERT INTO "Utilisateur" ("Nom", "Prenom", "Fonction", "NomManager") Values ('Rado', 'Eldo','Commercial','Bon');
