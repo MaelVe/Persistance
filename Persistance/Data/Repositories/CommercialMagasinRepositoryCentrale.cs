@@ -7,6 +7,9 @@ using Persistance.Data.Entities;
 
 namespace Persistance.Data.Repositories
 {
+    /// <summary>
+    /// Classe regroupant les méthodes CRUD sur une table de la base de données
+    /// </summary>
     public class CommercialMagasinRepositoryCentrale
     {
         private readonly PersistanceDbContext context;
@@ -16,14 +19,18 @@ namespace Persistance.Data.Repositories
             context = new PersistanceDbContext();
         }
 
-        public void AddRange(List<CommercialMagasin> visites)
+        /// <summary>
+        /// Ajoute une liste de CommercialMagasin dans la base de données
+        /// </summary>
+        /// <param name="commercialMagasins">une liste de CommercialMagasin</param>
+        public void AddRange(List<CommercialMagasin> commercialMagasins)
         {
             using (var transaction = context.Database.BeginTransaction())
             {
                 try
                 {
 
-                    context.CommercialMagasins.AddRange(visites);
+                    context.CommercialMagasins.AddRange(commercialMagasins);
 
                     context.SaveChanges();
                     transaction.Commit();

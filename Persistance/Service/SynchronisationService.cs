@@ -13,6 +13,11 @@ namespace Persistance.Service
 {
     public class SynchronisationService
     {
+        /// <summary>
+        /// Méthode de vérification de la présence sur le réseau de l'ordinateur ou est installé l'application
+        /// </summary>
+        /// <param name="adressIp"></param>
+        /// <returns></returns>
         public bool IsNetworkConnected(string adressIp)
         {
             bool connected = NetworkInterface.GetIsNetworkAvailable();
@@ -40,27 +45,12 @@ namespace Persistance.Service
             return connected;
         }
 
+        /// <summary>
+        /// Lance la synchronisation entre les deux bases de données
+        /// </summary>
         public void SynchronisationVisite()
         {
-            #region temp
-
-            //var magasinRepositoryCentrale = new MagasinRepositoryCentrale();
-            //var magasinRepository = new MagasinRepository();
-
-            //var utilisateurRepositoryCentrale = new UtilisateurRepositoryCentrale();
-            //var utilisateurRepository = new UtilisateurRepository();
-
-            //var commercialMagasinRepositoryCentrale = new CommercialMagasinRepositoryCentrale();
-            //var commercialMagasinRepository = new CommercialMagasinRepository();
-
-            ////magasinRepositoryCentrale.AddRange(magasinRepository.GetAll());
-            //var temp = utilisateurRepository.GetAll();
-            //utilisateurRepositoryCentrale.AddRange(temp);
-
-            //commercialMagasinRepositoryCentrale.AddRange(commercialMagasinRepository.GetAll());
-
-
-            #endregion
+            ArchivageService.Archivage();
 
             this.SynchronisationAjout();
 
@@ -71,6 +61,9 @@ namespace Persistance.Service
             this.RapatriementBaseCentrale();
         }
 
+        /// <summary>
+        /// Ajoute les nouvelles visites à la base centrale
+        /// </summary>
         private void SynchronisationAjout()
         {
             var visiteToAdd = new List<Visite>();
@@ -92,16 +85,23 @@ namespace Persistance.Service
             repoVisiteCentrale.AddRange(visiteToAdd);
         }
 
+        /// <summary>
+        /// Supprime les visites de la base centrale
+        /// </summary>
         private void SynchronisationSuppression()
         {
             var repoVisiteCentrale = new VisiteRepositoryCentrale();
             var repoVisiteLocale = new VisiteRepository();
 
-            //var visitesCentrales = repoCentrale.GetDeleted();
+            // Pour la suppresion, un champ de la ligne de visite est setter a true, il n'y as pas de vrai suppresion pour éviter
+            // les conflits avec les possibles autres modifications, un système de purge est mis en place pour éviter ça
             var visitesLocales = repoVisiteLocale.GetDeleted();
             repoVisiteCentrale.FakeDelete(visitesLocales);
         }
 
+        /// <summary>
+        /// Modifie les visites de la base centrale
+        /// </summary>
         private void SynchronisationModification()
         {
             var repoVisiteCentrale = new VisiteRepositoryCentrale();
@@ -137,12 +137,13 @@ namespace Persistance.Service
             }
         }
 
+        /// <summary>
+        /// Recopie toutes les visites de la base centrale dans la base locale
+        /// </summary>
         private void RapatriementBaseCentrale()
         {
             var repoVisiteCentrale = new VisiteRepositoryCentrale();
-            var repoVisiteLocale = new VisiteRepository();
-
-            ArchivageService.Archivage();
+            var repoVisiteLocale = new VisiteRepository();            
 
             repoVisiteLocale.DeleteAll();
 

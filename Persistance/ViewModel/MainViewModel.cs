@@ -9,6 +9,9 @@ namespace Persistance.ViewModel
         private int height;
         private int width;
 
+        /// <summary>
+        /// Constructeur principale de la classe
+        /// </summary>
         public MainViewModel()
         {
             Height = 500;

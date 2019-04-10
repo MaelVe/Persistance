@@ -151,7 +151,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converter\VisibilityConverter.cs" />
     <Compile Include="Data\PersistanceDbContextCentrale.cs" />
     <Compile Include="Data\Entities\CommercialMagasin.cs" />
     <Compile Include="Data\Entities\Magasin.cs" />
@@ -249,9 +248,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\fond.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MVVM\MVVM.csproj">
       <Project>{c4a1b00b-5dc5-4c4e-a338-98bc84d40b7f}</Project>
       <Name>MVVM</Name>
@@ -259,12 +255,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\fondNoir.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\fondMetal.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\fondBleue.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Archivage\" />

@@ -7,6 +7,9 @@ using Persistance.Data.Entities;
 
 namespace Persistance.Data.Repositories
 {
+    /// <summary>
+    /// Classe regroupant les méthodes CRUD sur une table de la base de données
+    /// </summary>
     public class CommercialMagasinRepository
     {
         private readonly PersistanceDbContext context;
@@ -16,6 +19,10 @@ namespace Persistance.Data.Repositories
             context = new PersistanceDbContext();
         }
 
+        /// <summary>
+        /// Récupère toutes les données de la table CommercialMagasin
+        /// </summary>
+        /// <returns>Une liste de CommercialMagasin</returns>
         public List<CommercialMagasin> GetAll()
         {
             return context.CommercialMagasins.ToList();

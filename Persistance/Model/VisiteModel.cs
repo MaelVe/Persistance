@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Persistance.Model
 {
+    /// <summary>
+    /// Classe servant de modele pour l'affichage dans l'ihm
+    /// </summary>
     public class VisiteModel
     {
         private int id;

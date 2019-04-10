@@ -7,6 +7,9 @@ using Persistance.Data.Entities;
 
 namespace Persistance.Data.Repositories
 {
+    /// <summary>
+    /// Classe regroupant les méthodes CRUD sur une table de la base de données
+    /// </summary>
     public class UtilisateurRepositoryCentrale
     {
         private readonly PersistanceDbContextCentrale context;
@@ -16,13 +19,17 @@ namespace Persistance.Data.Repositories
             context = new PersistanceDbContextCentrale();
         }
 
-        public void AddRange(List<Utilisateur> visites)
+        /// <summary>
+        /// Ajoute une liste de Utilisateur dans la base de données centrale
+        /// </summary>
+        /// <param name="commercialMagasins">une liste de Utilisateur</param>
+        public void AddRange(List<Utilisateur> utilisateurs)
         {
             using (var transaction = context.Database.BeginTransaction())
             {
                 try
                 {
-                    context.Utilisateurs.AddRange(visites);
+                    context.Utilisateurs.AddRange(utilisateurs);
 
                     context.SaveChanges();
                     transaction.Commit();
@@ -33,15 +40,6 @@ namespace Persistance.Data.Repositories
                     throw;
                 }
             }
-        }
-        public Utilisateur SearchUtilisateur(string nom, string prenom)
-        {
-            return context.Utilisateurs.FirstOrDefault(w => w.Nom == nom && w.Prenom == prenom);
-        }
-
-        public Utilisateur GetUtilisateur(int idUtilisateur)
-        {
-            return context.Utilisateurs.FirstOrDefault(f => f.IdUtilisateur == idUtilisateur);
         }
     }
 }

@@ -10,6 +10,9 @@ using Persistance.Service;
 
 namespace Persistance.ViewModel
 {
+    /// <summary>
+    /// ViewModel de la fenêtre principale
+    /// </summary>
     public class CommercialViewModel : ObservableObject
     {
         #region Fields
@@ -116,6 +119,9 @@ namespace Persistance.ViewModel
 
         #endregion
 
+        /// <summary>
+        /// Constructeur principale de la classe
+        /// </summary>
         public CommercialViewModel()
         {
             IsEnabled = false;
@@ -129,6 +135,10 @@ namespace Persistance.ViewModel
             SynchroCommand = new RelayCommand(SynchroCommandExecute);
         }
 
+        /// <summary>
+        /// Action lors de l'appui sur le bouton de synchro
+        /// </summary>
+        /// <param name="obj"></param>
         private void SynchroCommandExecute(object obj)
         {
             var synchro = new SynchronisationService();
@@ -139,6 +149,10 @@ namespace Persistance.ViewModel
             }
         }
 
+        /// <summary>
+        /// Action lors de l'appui sur le bouton de modification
+        /// </summary>
+        /// <param name="obj"></param>
         private void ModifierCommandExecute(object obj)
         {
             if (SelectedDateModif != null)
@@ -160,6 +174,10 @@ namespace Persistance.ViewModel
             }
         }
 
+        /// <summary>
+        /// Action lors de l'appui sur le bouton d'ajout
+        /// </summary>
+        /// <param name="obj"></param>
         private void AjouterCommandExecute(object obj)
         {
             if (SelectedDateAjout != null && !string.IsNullOrEmpty(NomMagasin))
@@ -176,6 +194,10 @@ namespace Persistance.ViewModel
             }
         }
 
+        /// <summary>
+        /// Action lors de l'appui sur le bouton de suppression
+        /// </summary>
+        /// <param name="obj"></param>
         private void SupprimerCommandExecute(object obj)
         {
             if (SelectedVisite != null)
@@ -187,12 +209,19 @@ namespace Persistance.ViewModel
             }
         }
 
+        /// <summary>
+        /// Fonction de mise a jour de la liste visible dans l'IHM concernant les visites d'un magasin
+        /// </summary>
         private void UpdateVisite()
         {
             List<Visite> visites = visiteRepository.GetVisiteByMagasin(selectedMagasin.IdMagasin);
             LesVisites = new ObservableCollection<VisiteModel>(this.TransformVisiteForDisplay(visites));
         }
 
+        /// <summary>
+        /// Récupération de l'utilisateur depuis la fenêtre de login et afichage des cards en fonction de la fonction de l'utilisateur
+        /// </summary>
+        /// <param name="utilisateur"></param>
         public void SetUtilisateur(Utilisateur utilisateur)
         {
             this.Utilisateur = utilisateur;
@@ -210,6 +239,9 @@ namespace Persistance.ViewModel
             }
         }
 
+        /// <summary>
+        /// Remplissage des champs concernant les information sur l'utilisateur
+        /// </summary>
         public void UpdateUser()
         {
             NomUser = Utilisateur.Nom;
@@ -218,6 +250,9 @@ namespace Persistance.ViewModel
             NomManagerUser = Utilisateur.NomManager;
         }
 
+        /// <summary>
+        /// Met à jour la liste des magasins
+        /// </summary>
         public void UpdateMagasin()
         {
             List<Magasin> magasins;
@@ -233,6 +268,11 @@ namespace Persistance.ViewModel
             }          
         }
 
+        /// <summary>
+        /// Transforme l'entité Visite en objet VisiteModel pour affichage
+        /// </summary>
+        /// <param name="visites"></param>
+        /// <returns></returns>
         public List<VisiteModel> TransformVisiteForDisplay(List<Visite> visites)
         {
             List<VisiteModel> visiteModels = new List<VisiteModel>();
@@ -251,6 +291,11 @@ namespace Persistance.ViewModel
             return visiteModels;
         }
 
+        /// <summary>
+        /// Transforme l'objet VisiteModel en entité Visite
+        /// </summary>
+        /// <param name="visiteModel"></param>
+        /// <returns></returns>
         public Visite TransformBackToVisite(VisiteModel visiteModel)
         {
             return visiteRepository.GetVisite(visiteModel.Id);

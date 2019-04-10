@@ -5,6 +5,7 @@ using MVVM;
 using Persistance.Data;
 using Persistance.Data.Entities;
 using Persistance.Data.Repositories;
+using Persistance.Service;
 
 namespace Persistance.ViewModel
 {
@@ -39,6 +40,9 @@ namespace Persistance.ViewModel
 
         #endregion
 
+        /// <summary>
+        /// Constructeur principale de la classe
+        /// </summary>
         public StartPageViewModel(CommercialViewModel commercialViewModel, MainViewModel mainViewModel)
         {
             ErrorMessageVisibility = false;
@@ -46,11 +50,12 @@ namespace Persistance.ViewModel
             utilisateurRepository = new UtilisateurRepository();
             this.MainViewModel = mainViewModel;
             ValiderCommand = new RelayCommand(ValiderCommandExecute);
-            this.CommercialViewModel = commercialViewModel;       
+            this.CommercialViewModel = commercialViewModel;
+            ArchivageService.Purge();
         }
 
         /// <summary>
-        /// Méthode d'éxécution
+        /// Action lors de l'appui sur le bouton Valider
         /// </summary>
         /// <param name="obj"></param>
         public void ValiderCommandExecute(object obj)

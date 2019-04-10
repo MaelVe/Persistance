@@ -5,7 +5,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:view="clr-namespace:Persistance.View"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:conv="clr-namespace:Persistance.Converter"
         xmlns:local="clr-namespace:Persistance"
         mc:Ignorable="d"
         Title="Suivi des visites" Height="{Binding Height, Mode=TwoWay}" Width="{Binding Width, Mode=TwoWay}">
